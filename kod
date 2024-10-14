@@ -1,0 +1,62 @@
+#include <iostream>
+#include <list>
+#include <vector>
+using namespace std;
+
+int max(vector<int> vect)
+{
+	int max = 0;
+	int max_index = 0;
+	for (int i = 0; i < vect.size(); i++)
+	{
+		if (vect[i] > max)
+		{
+			max = vect[i];
+			max_index = i;
+		}
+	}
+	return max_index;
+}
+
+vector<int> sort(vector<int> vect)
+{
+	int maxim;
+	vector<int> newVector;
+	vector<int> oldVector = vect;
+	for (int i = 0; i < vect.size(); i++)
+	{
+		maxim = max(oldVector);
+		newVector.push_back(oldVector[maxim]);
+		oldVector[maxim] = -10000000;
+	}
+	return newVector;
+}
+
+int binar(vector<int> vect, int value,int lower, int maxim)
+{
+	int low = lower;
+	int max = maxim;
+	int mid = (low + max) / 2;
+	if (vect[mid] == value)
+		return mid;
+	else 
+	{
+		if (vect[mid] > value)
+			return binar(vect, value, mid + 1, max);
+		else
+			return binar(vect, value, low, mid - 1);
+	}
+
+}
+
+int main()
+{
+	vector<int> my_list = {9, 2, 6, 1, 4};
+	vector<int> newVect = sort(my_list);
+	/* for (int i = 0; i < newVect.size(); i++)
+	{
+		cout << newVect[i];
+	}
+	*/
+	cout << binar(newVect, 2, 0, newVect.size() - 1);
+}
